@@ -20,12 +20,7 @@
         (inputs.nvf.lib.neovimConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [
-            {
-              config.vim = {
-                theme.enable = true;
-                treesitter.enable = true;
-              };
-            }
+            ./nvim-config.nix
           ];
         })
         .neovim;
