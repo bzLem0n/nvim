@@ -14,16 +14,12 @@
     systems.url = "github:nix-systems/default";
   };
 
-  outputs = {nixpkgs, ...} @ inputs: {
-    packages.x86_64-linux = {
-      default =
-        (inputs.nvf.lib.neovimConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [
-            ./nvim-config.nix
-          ];
-        })
-        .neovim;
+  outputs = inputs @ {flake-parts, ...}:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = import inputs.systems;
+
+      imports = [
+        ./neovim.nix
+      ];
     };
-  };
 }
